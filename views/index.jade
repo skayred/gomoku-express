@@ -1,0 +1,33 @@
+doctype
+html
+  head
+    title #{title} - My Site
+  body
+    - if (win)
+      script.
+        alert('Player #{[2, 1][turn]} won!')
+    - end
+    header
+      h1 Gomoku
+    form(method='post')
+      input(type='submit', name='restart', value='Restart')
+    .board
+      table(border='1px collapse')
+        - for (let i = 0 ; i < 5 ; i++) {
+          tr
+            - for (let j = 0 ; j < 5 ; j++) {
+              - if (!(i+'.'+j in board)) {
+                form(id='form#{i}#{j}', method='post')
+                  input(type='hidden', name='cell', value='#{i}.#{j}')
+                  input(type='hidden', name='turn', value='#{[1, 0][turn]}')
+              - }
+              td(width='50px', height='50px', onclick='document.getElementById("form#{i}#{j}").submit();')
+                  - if (i+'.'+j in board) {
+                    - if (board[i+'.'+j] == 0) {
+                    span o
+                    - } else {
+                    span x
+                    - }
+                  - }
+            - }
+        - }
